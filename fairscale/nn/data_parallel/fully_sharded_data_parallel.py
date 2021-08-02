@@ -116,7 +116,7 @@ class FullyShardedDataParallel(nn.Module):
         fsdp_params = dict(wrapper_cls=FSDP, mixed_precision=True, flatten_parameters=True)
         with enable_wrap(**fsdp_params):
             # Wraps layer in FSDP by default if within context
-            self.l1 = wrap(torch.nn.Linear(5, 5))
+            self.l1 = auto_wrap(torch.nn.Linear(5, 5))
             assert isinstance(self.l1, FSDP)
             # Separately Wraps children modules with more than 1e8 params
             large_tfmr = torch.nn.Transformer(d_model=2048, encoder_layers=12, decoder_layers=12)
